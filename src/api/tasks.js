@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
 import api from 'axios';
+import { defineStore } from 'pinia';
 
 export const useTasksStore = defineStore('task', {
   state: () => ({
@@ -9,7 +9,7 @@ export const useTasksStore = defineStore('task', {
   actions: {
     async getTasks() {
       try {
-        const res = await api.get('http://localhost:3000/tasks');
+        const res = await api.get('/tasks');
         this.tasks = res.data;
         return this.tasks;
       } catch (err) {
@@ -20,7 +20,7 @@ export const useTasksStore = defineStore('task', {
     async createTask(data) {
       //data: {task_name, task_completed}
       try {
-        const res = await api.post('http://localhost:3000/tasks', data);
+        const res = await api.post('/tasks', data);
         this.tasks.push(res.data);
         return this.tasks;
 
@@ -31,7 +31,7 @@ export const useTasksStore = defineStore('task', {
     async toggleStatus(id, data) {
       //data: {task_completed}
       try {
-        const res = await api.patch(`http://localhost:3000/tasks/${id}`, data);
+        const res = await api.patch(`/tasks/${id}`, data);
         const index = this.tasks.findIndex(t => t.id === id);
         if (index !== -1) this.tasks[index] = res.data;
         return this.tasks;
@@ -41,7 +41,7 @@ export const useTasksStore = defineStore('task', {
     },
     async deleteTask(id) {
       try {
-        const res = await api.delete(`http://localhost:3000/tasks/${id}`);
+        const res = await api.delete(`/tasks/${id}`);
         this.tasks = this.tasks.filter(t => t.id !== id);
         return this.tasks;
       } catch (err) {

@@ -13,10 +13,3 @@
 
   <Footer />
 </template>
-
-<style scoped>
-.page{
-  max-height: 75dvh;
-  overflow-y: scroll;
-}
-</style>

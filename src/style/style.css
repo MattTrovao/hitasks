@@ -1,0 +1,31 @@
+@import url("reset.css");
+
+:root {
+  font-family: "Rubik", sans-serif;
+  
+  --green: #004b23;
+  --blue: #0D3B66;
+  --yellow: #F4D35E;
+  --red: #F95738;
+  --gray: #adb5bd;
+  --black: #322600;
+  --white: #f9f2d8;
+  --transition: all ease-in-out .5s;
+}
+
+body {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  background: var(--white);
+}
+
+
+a, button {
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+div {
+  position: relative;
+}

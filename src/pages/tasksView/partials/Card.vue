@@ -20,16 +20,16 @@ const props = defineProps({
 });
 
 const tasksStore = useTasksStore();
-const { toggleStatus } = tasksStore
+const { toggleStatus, deleteTask } = tasksStore
 const isCompleted = ref(props.completed)
 
 const handleToogleTask = async () => {
+  isCompleted.value = !isCompleted.value
   let data = {
-    task_completed: !isCompleted.value
+    task_completed: isCompleted.value
   }
 
   let response = await toggleStatus(props.id,data)
-  
   if(response) {
     Swal.fire({
       title: 'Sucesso!',
@@ -48,11 +48,35 @@ const handleToogleTask = async () => {
     });
   }
 }
+
+const handleRemoveTask = async() => {
+  const result = await Swal.fire({
+    title: "Atenção!",
+    text: `Você realmente deseja deletar a tarefa ${props.title}?`,
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonText: "Cancelar",
+    confirmButtonText: "Sim",
+    reverseButtons: true,
+  });
+
+  if (result.isConfirmed) {
+    await deleteTask(props.id);
+
+    Swal.fire({
+      title: "Tarefa deletada com sucesso!",
+      icon: "success",
+      timer: 3000,
+    });
+
+    emit("refresh");
+  }
+}
 </script>
 
 <template>
   <div :class="['card', { '--completed': isCompleted }]">
-    <Checkbox :checked="isCompleted" @click="handleToogleTask" />
+    <Checkbox :checked="isCompleted" @change="handleToogleTask" />
 
     <div class="__title">
       <h2>
@@ -61,7 +85,7 @@ const handleToogleTask = async () => {
     </div>
 
 
-    <Btn type="delete" class="__delete">
+    <Btn type="delete" class="__delete" @click="handleRemoveTask">
       <svg
         width="15"
         height="15"
@@ -83,7 +107,7 @@ const handleToogleTask = async () => {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem  2rem;
+  padding: 1.5rem 2rem;
   width: auto;
   border: 2px solid var(--gray);
   border-radius: 16px;
@@ -118,8 +142,8 @@ const handleToogleTask = async () => {
 
   .__delete {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
   }
 }
 </style>

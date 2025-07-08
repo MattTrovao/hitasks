@@ -18,13 +18,14 @@ const name = ref('')
 const check = ref(false)
 
 
-const handleNewTask = async () => {
+const handleNewTask = async () => { 
   let data = {
     task_name: name.value,
     task_completed: check.value,
   }
 
   let response = await createTask(data)
+    
   if(response) {
     Swal.fire({
       title: 'Sucesso!',
@@ -68,7 +69,7 @@ onUpdated(() => {
         </div>
 
         <div class="flex aling-center justify-start gap-1">
-          <Checkbox :checked="check" />
+          <Checkbox :checked="check" @change="check = !check" />
           <Label for="name">Tarefa Concluída</Label>
         </div>
       </div>

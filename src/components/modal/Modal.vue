@@ -84,4 +84,12 @@ const emit = defineEmits(["close"]);
 .fade-leave-to {
   opacity: 0;
 }
+
+@media only screen and (max-width : 900px) {
+  .overlay {
+    .modal {
+      width: 80dvw;
+    }
+  }
+}
 </style>

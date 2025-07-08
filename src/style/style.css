@@ -29,3 +29,7 @@ a, button {
 div {
   position: relative;
 }
+
+#app {
+  height: 100dvh;
+}

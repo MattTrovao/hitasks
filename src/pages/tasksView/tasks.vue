@@ -13,8 +13,9 @@ const tasks = ref([])
 const newModal = ref(false)
 const loading = ref(true)
 
-const handleUpdateTaskList = () => {
-  newModal.value = true
+const handleUpdateTaskList = async() => {
+  newModal.value = false
+  await initFunction()
 }
 
 const initFunction = async () => {
@@ -61,21 +62,23 @@ onMounted(() => {
       </Btn>
     </div>
 
-    <div class="list">
-      <template v-for="task in tasks" :key="task.task_id">
+    <div class="list" v-if="tasks.length > 0">
+      <template v-for="task in tasks" :key="task.id">
         <Card 
           :completed="task.task_completed" 
-          :id="task.task_id"
+          :id="task.id"
           :title="task.task_name"
-          @refresh="initFunction"
+          @refresh="handleUpdateTaskList"
         />
       </template>
     </div>
+
+    <NoData v-else />
   </template>
 
   <NewTask 
     :open="newModal"
-    @refresh="initFunction"
+    @refresh="handleUpdateTaskList"
     @close="newModal = false"
   />
 </template>
@@ -83,7 +86,13 @@ onMounted(() => {
 <style scoped>
 .list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+}
+
+@media only screen and (max-width : 900px) {
+  .list {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 </style>

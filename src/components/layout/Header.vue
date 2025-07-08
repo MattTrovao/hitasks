@@ -1,13 +1,20 @@
-<script setup></script>
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+</script>
 
 <template>
   <header class="header">
-    <div class="logo">
+    <router-link to="/" class="logo" >
       <img src="@/assets/logo.png" alt="" class="logo">
-      <p>HiTASKS</p>
-    </div>
+      <p>Task Manager</p>
+    </router-link>
 
     <div class="menu">
+      <router-link to="/" class="__link">
+        Home
+      </router-link>
       <router-link to="/about" class="__link">
         Sobre
       </router-link>
@@ -34,13 +41,14 @@
     align-items: center;
     gap: .5rem;
     img{
-      width: 50px;
+      width: 40px;
       height: 50px;
     }
     p {
       margin: 0;
       font-size: 1.5rem;
       font-weight: 700;
+      color: var(--black);
     }
   }
 
@@ -53,10 +61,43 @@
       font-size: .9rem;
       font-weight: 700;
       text-transform: uppercase;
+      position: relative;
+
+      &:before{
+        content: '';
+        width: 10%;
+        height: 3px;
+        display: block;
+        background: var(--blue);
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        opacity: 0;
+        transition: inherit;
+      }
+
+      &.router-link-exact-active {
+        color: var(--blue);
+        &::before{
+          width: 110%;
+          opacity: 1;
+        }
+      }
 
       &:hover{
         opacity: .5;
+        &::before{
+          width: 110%;
+          opacity: 1;
+        }
       }
+    }
+  }
+}
+@media only screen and (max-width : 900px) {
+  .header {
+    .menu {
+      gap: .5rem;
     }
   }
 }

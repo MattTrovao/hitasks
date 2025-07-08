@@ -13,12 +13,16 @@ import "sweetalert2/dist/sweetalert2.min.css";
 export const pinia = createPinia();
 
 import Btn from "@/components/layout/Btn.vue";
+import Footer from "@/components/layout/Footer.vue";
 import Header from "@/components/layout/Header.vue";
 import Loading from "@/components/layout/Loading.vue";
+import NoData from "@/components/layout/NoData.vue";
 import Page from "@/components/layout/Page.vue";
 app.component("Btn", Btn);
+app.component("Footer", Footer);
 app.component("Header", Header);
 app.component("Loading", Loading);
+app.component("NoData", NoData);
 app.component("Page", Page);
 
 import Label from "@/components/type/Label.vue";

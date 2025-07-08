@@ -11,7 +11,7 @@ export const useTasksStore = defineStore('task', {
       try {
         const res = await api.get('http://localhost:3000/tasks');
         this.tasks = res.data;
-        return res.data;
+        return this.tasks;
       } catch (err) {
         console.error('Erro ao buscar tarefas:', err);
       }
@@ -22,6 +22,8 @@ export const useTasksStore = defineStore('task', {
       try {
         const res = await api.post('http://localhost:3000/tasks', data);
         this.tasks.push(res.data);
+        return this.tasks;
+
       } catch (err) {
         console.error('Erro ao adicionar tarefa:', err);
       }
@@ -32,10 +34,19 @@ export const useTasksStore = defineStore('task', {
         const res = await api.patch(`http://localhost:3000/tasks/${id}`, data);
         const index = this.tasks.findIndex(t => t.id === id);
         if (index !== -1) this.tasks[index] = res.data;
+        return this.tasks;
       } catch (err) {
         console.error('Erro ao atualizar status da tarefa:', err);
       }
-    }
-
+    },
+    async deleteTask(id) {
+      try {
+        const res = await api.delete(`http://localhost:3000/tasks/${id}`);
+        this.tasks = this.tasks.filter(t => t.id !== id);
+        return this.tasks;
+      } catch (err) {
+        console.error('Erro ao atualizar status da tarefa:', err);
+      }
+    },
   },
 });

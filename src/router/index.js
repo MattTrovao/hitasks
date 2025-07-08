@@ -9,6 +9,12 @@ const router = createRouter({
       children: [
         {
           path: "",
+          name: "Home",
+          component: () => import("@/pages/homeView/home.vue"),
+          meta: { title: "Home" },
+        },
+        {
+          path: "/about",
           name: "Sobre",
           component: () => import("@/pages/aboutView/about.vue"),
           meta: { title: "Sobre" },
